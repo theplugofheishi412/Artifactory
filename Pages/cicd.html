@@ -1,82 +1,148 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>Artifactory & CI/CD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Assets/style/styles.css">
 </head>
+
 <body>
 
-<header class="header">
-  <h1>Artifactory & CI/CD</h1>
-  <p>Intégration dans un pipeline DevOps</p>
-</header>
+  <header class="header">
+    <h1>Artifactory & CI/CD</h1>
+    <p>Intégration dans un pipeline DevOps</p>
+  </header>
 
-<nav class="navbar">
-  <ul>
-    <li><a href="../index.html">Accueil</a></li>
-    <li><a href="devops.html">DevOps</a></li>
-    <li><a href="artifactory.html">Artifactory</a></li>
-    <li><a href="installation.html">Installation</a></li>
-    <li><a href="utilisation.html">Utilisation</a></li>
-    <li><a href="cicd.html" class="active">CI/CD</a></li>
-    <li><a href="securite.html">Sécurité</a></li>
-    <li><a href="Etude_cas.html">Étude de cas</a></li>
-    <li><a href="ressources.html">Ressources</a></li>
-  </ul>
-</nav>
-
-<main class="container">
-
-  <section>
-    <h2>Qu’est-ce qu’un pipeline CI/CD ?</h2>
-    <p>
-      Le CI/CD (Intégration Continue / Déploiement Continu) permet
-      d’automatiser le cycle de vie d’une application :
-      build, test, stockage des artefacts et déploiement.
-    </p>
-  </section>
-
-  <section>
-    <h2>Rôle d’Artifactory dans le pipeline</h2>
+  <nav class="navbar">
     <ul>
-      <li>Stocker les artefacts générés par le build</li>
-      <li>Garantir une version unique et fiable</li>
-      <li>Servir de lien entre CI et CD</li>
+      <li><a href="../index.html">Accueil</a></li>
+      <li><a href="devops.html">DevOps</a></li>
+      <li><a href="artifactory.html">Artifactory</a></li>
+      <li><a href="installation.html">Installation</a></li>
+      <li><a href="utilisation.html">Utilisation</a></li>
+      <li><a href="cicd.html" class="active">CI/CD</a></li>
+      <li><a href="securite.html">Sécurité</a></li>
+      <li><a href="Etude_cas.html">Étude de cas</a></li>
+      <li><a href="ressources.html">Ressources</a></li>
     </ul>
-  </section>
+  </nav>
 
-  <section>
-    <h2>Pipeline CI/CD simplifié</h2>
-    <p>
-      Développeur → Git → Jenkins → <strong>Artifactory</strong> → Production
-    </p>
-  </section>
+  <main class="container">
 
-  <section>
-    <h2>Exemple avec Jenkins</h2>
-    <p>Étapes du pipeline :</p>
-    <ol>
-      <li>Récupération du code</li>
-      <li>Build de l’application</li>
-      <li>Publication dans Artifactory</li>
-      <li>Déploiement</li>
-    </ol>
-  </section>
+    <section>
+      <h2>Qu'est-ce qu'un pipeline CI/CD ?</h2>
+      <p>
+        Le CI/CD (Intégration Continue / Déploiement Continu) permet
+        d'automatiser le cycle de vie d'une application :
+        build, test, stockage des artefacts et déploiement.
+      </p>
+    </section>
 
-  <section>
-    <h2>Avantages</h2>
-    <ul>
-      <li>Automatisation complète</li>
-      <li>Réduction des erreurs humaines</li>
-      <li>Déploiements plus rapides</li>
-    </ul>
-  </section>
+    <section>
+      <h2>Rôle d'Artifactory dans le pipeline</h2>
+      <p>Artifactory est bien plus qu'un simple stockage d'artefacts. Grâce au concept de <strong>Build-Info</strong>, il offre une traçabilité complète du cycle de développement.</p>
+      <ul>
+        <li>Stocker les artefacts générés par le build</li>
+        <li>Garantir une version unique et fiable</li>
+        <li>Servir de lien entre CI et CD</li>
+        <li>Fournir une traçabilité complète avec Build Info</li>
+      </ul>
+    </section>
 
-</main>
+    <section>
+      <h2>Pipeline CI/CD détaillé avec Artifactory</h2>
+      
+      <h3>Le flux principal</h3>
+      <p>Le pipeline suit un flux continu : <strong>Git → Jenkins → Artifactory → Outils de déploiement</strong></p>
+      
+      <h4>1. Git → Jenkins (Commit du code)</h4>
+      <ul>
+        <li>Un développeur pousse du code dans Git</li>
+        <li>Webhook Git déclenche automatiquement un job Jenkins</li>
+      </ul>
+      
+      <h4>2. Jenkins → Artifactory (Build et publication)</h4>
+      <ul>
+        <li>Jenkins exécute le pipeline de build (compilation, tests)</li>
+        <li>Les artefacts générés sont publiés dans Artifactory</li>
+      </ul>
+      
+      <p><strong>Exemple de publication :</strong></p>
+      <pre><code># Publication d'un JAR Maven
+mvn deploy -DaltDeploymentRepository='mon-repo::default::http://artifactory/artifactory/libs-release-local'
 
+# Push d'une image Docker
+docker tag mon-app:latest artifactory/docker-local/mon-app:1.0.0
+docker push artifactory/docker-local/mon-app:1.0.0</code></pre>
+        
+      <h4>3. Artifactory → Deployment Tools (Déploiement)</h4>
+      <ul>
+        <li>Les outils de déploiement (Kubernetes, Ansible, etc.) récupèrent les artefacts</li>
+        <li>Ils utilisent toujours la bonne version depuis Artifactory</li>
+      </ul>
+      
+      <p><strong>Exemple pour Kubernetes :</strong></p>
+      <pre><code># Dans un deployment.yaml
+spec:
+  containers:
+  - name: mon-app
+    image: artifactory/docker-local/mon-app:1.0.0  # Version spécifique</code></pre>
+    </section>
 
+    <section>
+      <h2>La partie Build Info - La vraie valeur d'Artifactory</h2>
+      
+      <h3>Qu'est-ce que Build Info ?</h3>
+      <p>Build Info représente la traçabilité complète d'un build. Artifactory ne stocke pas seulement les fichiers binaires, mais aussi toutes les métadonnées qui répondent aux questions essentielles :</p>
+      <ul>
+        <li><strong>QUI</strong> a créé cet artefact ?</li>
+        <li><strong>QUAND</strong> a-t-il été créé ?</li>
+        <li><strong>AVEC QUOI</strong> (dépendances) ?</li>
+        <li><strong>À PARTIR DE QUOI</strong> (code source) ?</li>
+        <li><strong>POURQUOI</strong> (quel ticket/commit) ?</li>
+      </ul>
+      
+      <p>Cette traçabilité permet de remonter à l'origine exacte de chaque artefact en production, ce qui est essentiel pour la sécurité, l'audit et la résolution de problèmes.</p>
+      
+      <h3>Cycle complet de Build-Info</h3>
+      <p>Le Build-Info rend Artifactory bien plus qu'un simple stockage d'artefacts. Il crée un lien bidirectionnel entre tous les éléments du pipeline :</p>
+      <ul>
+        <li>Le code source Git est lié aux artefacts produits</li>
+        <li>Les dépendances utilisées pendant le build sont enregistrées</li>
+        <li>Les métadonnées du build sont stockées avec les artefacts</li>
+        <li>Les environnements de déploiement référencent les artefacts spécifiques</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Exemple avec Jenkins</h2>
+      <p>Étapes du pipeline :</p>
+      <ol>
+        <li>Récupération du code</li>
+        <li>Build de l'application</li>
+        <li>Publication dans Artifactory avec métadonnées complètes</li>
+        <li>Déploiement avec garantie de version</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Avantages</h2>
+      <ul>
+        <li>Automatisation complète</li>
+        <li>Réduction des erreurs humaines</li>
+        <li>Déploiements plus rapides</li>
+        <li>Traçabilité complète de bout en bout</li>
+        <li>Conformité et audit facilités</li>
+        <li>Reproductibilité des builds</li>
+        <li>Gestion centralisée de tous les artefacts</li>
+        <li>Détection précoce des problèmes de dépendances</li>
+      </ul>
+    </section>
+
+  </main>
 
 </body>
+
 </html>
