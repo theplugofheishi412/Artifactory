@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Utilisation d’Artifactory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Assets/style/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>Utilisation d’Artifactory</h1>
+  <p>Création de dépôts et gestion des artefacts</p>
+</header>
+
+<nav class="navbar">
+  <ul>
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="devops.html">DevOps</a></li>
+    <li><a href="artifactory.html">Artifactory</a></li>
+    <li><a href="installation.html">Installation</a></li>
+    <li><a href="utilisation.html" class="active">Utilisation</a></li>
+    <li><a href="cicd.html">CI/CD</a></li>
+    <li><a href="securite.html">Sécurité</a></li>
+    <li><a href="Etude_cas.html">Étude de cas</a></li>
+    <li><a href="ressources.html">Ressources</a></li>
+  </ul>
+</nav>
+
+<main class="container">
+
+  <!-- INTRO -->
+  <section>
+    <h2>Premiers pas avec Artifactory</h2>
+    <p>
+      Une fois Artifactory installé et accessible via l’interface web,
+      nous pouvons commencer à gérer les artefacts :
+      création de dépôts, publication et récupération des fichiers.
+    </p>
+  </section>
+
+  <!-- DEPOT -->
+  <section>
+    <h2>Créer un dépôt</h2>
+
+    <h3>Étape 1 : Accéder à l’administration</h3>
+    <p>
+      Connectez-vous avec un compte administrateur, puis :
+    </p>
+    <ul>
+      <li>Administration</li>
+      <li>Repositories</li>
+      <li>Create Repository</li>
+    </ul>
+
+    <h3>Étape 2 : Choisir le type de dépôt</h3>
+    <ul>
+      <li><strong>Local</strong> : artefacts internes</li>
+      <li><strong>Remote</strong> : proxy vers un dépôt externe</li>
+      <li><strong>Virtual</strong> : regroupement de dépôts</li>
+    </ul>
+
+    <h3>Exemple : Dépôt Maven Local</h3>
+    <ul>
+      <li>Type : Local</li>
+      <li>Package Type : Maven</li>
+      <li>Repository Key : <code>maven-local</code></li>
+    </ul>
+  </section>
+
+  <!-- UPLOAD -->
+  <section>
+    <h2>Publier un artefact</h2>
+
+    <h3>Méthode 1 : Upload manuel</h3>
+    <p>
+      Depuis l’interface web :
+    </p>
+    <ul>
+      <li>Artifacts</li>
+      <li>Sélectionner le dépôt</li>
+      <li>Deploy</li>
+      <li>Choisir le fichier</li>
+    </ul>
+
+    <h3>Méthode 2 : Upload avec Maven</h3>
+    <p>Exemple de configuration <code>pom.xml</code> :</p>
+
+    <pre><code>&lt;distributionManagement&gt;
+  &lt;repository&gt;
+    &lt;id&gt;artifactory&lt;/id&gt;
+    &lt;url&gt;http://localhost:8081/artifactory/maven-local&lt;/url&gt;
+  &lt;/repository&gt;
+&lt;/distributionManagement&gt;</code></pre>
+
+    <p>Publication :</p>
+
+    <pre><code>mvn deploy</code></pre>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section>
+    <h2>Télécharger un artefact</h2>
+    <p>
+      Les artefacts peuvent être récupérés :
+    </p>
+    <ul>
+      <li>Via l’interface web</li>
+      <li>Via Maven / npm / pip</li>
+      <li>Via une URL directe</li>
+    </ul>
+
+    <p>Exemple Maven :</p>
+
+    <pre><code>&lt;repositories&gt;
+  &lt;repository&gt;
+    &lt;id&gt;artifactory&lt;/id&gt;
+    &lt;url&gt;http://localhost:8081/artifactory/maven-local&lt;/url&gt;
+  &lt;/repository&gt;
+&lt;/repositories&gt;</code></pre>
+  </section>
+
+  <!-- VERSION -->
+  <section>
+    <h2>Gestion des versions</h2>
+    <p>
+      Artifactory permet de gérer plusieurs versions d’un même artefact :
+    </p>
+    <ul>
+      <li>Versions <code>SNAPSHOT</code></li>
+      <li>Versions <code>RELEASE</code></li>
+      <li>Historique des builds</li>
+    </ul>
+
+    <p>
+      Cela permet de revenir à une version stable à tout moment.
+    </p>
+  </section>
+
+  <!-- BONNES PRATIQUES -->
+  <section>
+    <h2>Bonnes pratiques</h2>
+    <ul>
+      <li>Ne jamais déployer directement en production</li>
+      <li>Utiliser des dépôts distincts (dev / test / prod)</li>
+      <li>Versionner correctement les artefacts</li>
+      <li>Restreindre les droits d’accès</li>
+    </ul>
+  </section>
+
+</main>
+
+
+</body>
+</html>

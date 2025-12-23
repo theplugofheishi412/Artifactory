@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Installation d’Artifactory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Assets/style/styles.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Installation d’Artifactory</h1>
+        <p>Windows • macOS • Linux (Debian)</p>
+    </header>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+
+            <li><a href="devops.html">DevOps</a></li>
+            <li><a href="artifactory.html">Artifactory</a></li>
+            <li><a href="installation.html" class="active">Installation</a></li>
+            <li><a href="utilisation.html">Utilisation</a></li>
+            <li><a href="cicd.html">CI/CD</a></li>
+            <li><a href="securite.html">Sécurité</a></li>
+            <li><a href="Etude_cas.html">Étude de cas</a></li>
+            <li><a href="ressources.html">Ressources</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+
+        <!-- PREREQUIS -->
+        <section>
+            <h2>Prérequis généraux</h2>
+            <ul>
+                <li>4 Go de RAM minimum</li>
+                <li>Docker installé</li>
+                <li>Navigateur web récent</li>
+                <li>Connexion Internet</li>
+            </ul>
+        </section>
+
+        <!-- WINDOWS -->
+        <section>
+            <h2>Installation sur Windows</h2>
+
+            <h3>Étape 1 : Installer Docker Desktop</h3>
+            <p>
+                Télécharger et installer <strong>Docker Desktop for Windows</strong>.
+                Pendant l’installation, activer <strong>WSL 2</strong>.
+            </p>
+
+            <h3>Étape 2 : Vérifier Docker</h3>
+            <pre><code>docker --version</code></pre>
+
+            <h3>Étape 3 : Lancer Artifactory</h3>
+            <pre><code>docker run -d ^
+                --name artifactory ^
+                -p 8081:8081 ^
+                -p 8082:8082 ^
+                docker.bintray.io/jfrog/artifactory-oss</code></pre>
+            <p>
+                Accès web :
+            </p>
+            <pre><code>http://localhost:8081</code></pre>
+        </section>
+
+        <!-- MACOS -->
+        <section>
+            <h2>Installation sur macOS</h2>
+
+            <h3>Étape 1 : Installer Docker Desktop</h3>
+            <p>
+                Installer Docker Desktop pour macOS (Intel ou Apple Silicon).
+            </p>
+
+            <h3>Étape 2 : Vérifier Docker</h3>
+            <pre><code>docker --version</code></pre>
+
+            <h3>Étape 3 : Lancer Artifactory</h3>
+            <pre><code>docker run -d \
+            --name artifactory \
+            -p 8081:8081 \
+            -p 8082:8082 \
+            docker.bintray.io/jfrog/artifactory-oss</code></pre>
+            <p>
+                Accès web :
+            </p>
+            <pre><code>http://localhost:8081</code></pre>
+        </section>
+
+        <!-- DEBIAN -->
+        <section>
+            <h2>Installation sur Linux (Debian)</h2>
+
+            <h3>Étape 1 : Installer Docker</h3>
+            <pre><code>sudo apt update
+            sudo apt install docker.io -y
+            sudo systemctl start docker
+            sudo systemctl enable docker</code></pre>
+
+            <h3>Étape 2 : Vérifier Docker</h3>
+            <pre><code>docker --version</code></pre>
+
+            <h3>Étape 3 : Lancer Artifactory</h3>
+            <pre><code>docker run -d \
+            --name artifactory \
+            -p 8081:8081 \
+            -p 8082:8082 \
+            docker.bintray.io/jfrog/artifactory-oss</code></pre>
+            <p>
+                Accès web :
+            </p>
+            <pre><code>http://localhost:8081</code></pre>
+        </section>
+
+        <!-- IDENTIFIANTS -->
+        <section>
+            <h2>Connexion à Artifactory</h2>
+            <ul>
+                <li><strong>Utilisateur :</strong> admin</li>
+                <li><strong>Mot de passe :</strong> password</li>
+            </ul>
+
+            <p>
+                Il est recommandé de changer le mot de passe dès la première connexion.
+            </p>
+        </section>
+
+        <!-- POURQUOI DOCKER -->
+        <section>
+            <h2>Pourquoi utiliser Docker ?</h2>
+            <ul>
+                <li>Même installation sur tous les OS</li>
+                <li>Rapide et reproductible</li>
+                <li>Très utilisé en DevOps</li>
+                <li>Facile à intégrer en CI/CD</li>
+            </ul>
+        </section>
+
+    </main>
+
+
+</body>
+
+</html>

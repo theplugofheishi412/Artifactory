@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Artifactory & CI/CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Assets/style/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>Artifactory & CI/CD</h1>
+  <p>Intégration dans un pipeline DevOps</p>
+</header>
+
+<nav class="navbar">
+  <ul>
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="devops.html">DevOps</a></li>
+    <li><a href="artifactory.html">Artifactory</a></li>
+    <li><a href="installation.html">Installation</a></li>
+    <li><a href="utilisation.html">Utilisation</a></li>
+    <li><a href="cicd.html" class="active">CI/CD</a></li>
+    <li><a href="securite.html">Sécurité</a></li>
+    <li><a href="Etude_cas.html">Étude de cas</a></li>
+    <li><a href="ressources.html">Ressources</a></li>
+  </ul>
+</nav>
+
+<main class="container">
+
+  <section>
+    <h2>Qu’est-ce qu’un pipeline CI/CD ?</h2>
+    <p>
+      Le CI/CD (Intégration Continue / Déploiement Continu) permet
+      d’automatiser le cycle de vie d’une application :
+      build, test, stockage des artefacts et déploiement.
+    </p>
+  </section>
+
+  <section>
+    <h2>Rôle d’Artifactory dans le pipeline</h2>
+    <ul>
+      <li>Stocker les artefacts générés par le build</li>
+      <li>Garantir une version unique et fiable</li>
+      <li>Servir de lien entre CI et CD</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pipeline CI/CD simplifié</h2>
+    <p>
+      Développeur → Git → Jenkins → <strong>Artifactory</strong> → Production
+    </p>
+  </section>
+
+  <section>
+    <h2>Exemple avec Jenkins</h2>
+    <p>Étapes du pipeline :</p>
+    <ol>
+      <li>Récupération du code</li>
+      <li>Build de l’application</li>
+      <li>Publication dans Artifactory</li>
+      <li>Déploiement</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Avantages</h2>
+    <ul>
+      <li>Automatisation complète</li>
+      <li>Réduction des erreurs humaines</li>
+      <li>Déploiements plus rapides</li>
+    </ul>
+  </section>
+
+</main>
+
+
+
+</body>
+</html>
