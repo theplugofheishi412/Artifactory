@@ -3,146 +3,580 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Installation d’Artifactory</title>
+    <title>Guide d'Installation d'Artifactory | Windows, macOS, Linux</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Guide complet d'installation d'Artifactory sur Windows, macOS et Linux avec Docker, configuration avancée et dépannage">
     <link rel="stylesheet" href="../Assets/style/styles.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
     <header class="header">
-        <h1>Installation d’Artifactory</h1>
-        <p>Windows • macOS • Linux (Debian)</p>
+        <h1>Installation d'Artifactory</h1>
+        <p>Guide complet pour Windows • macOS • Linux (Debian/Ubuntu/RHEL)</p>
     </header>
 
     <nav class="navbar">
         <ul>
-            <li><a href="../index.html">Accueil</a></li>
-
-            <li><a href="devops.html">DevOps</a></li>
-            <li><a href="artifactory.html">Artifactory</a></li>
-            <li><a href="installation.html" class="active">Installation</a></li>
-            <li><a href="utilisation.html">Utilisation</a></li>
-            <li><a href="cicd.html">CI/CD</a></li>
-            <li><a href="securite.html">Sécurité</a></li>
-            <li><a href="Etude_cas.html">Étude de cas</a></li>
-            <li><a href="ressources.html">Ressources</a></li>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
+            <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+            <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
+            <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
+            <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+            <li><a href="securite.html"><i class="fas fa-shield-alt"></i> Sécurité</a></li>
+            <li><a href="Etude_cas.html"><i class="fas fa-chart-line"></i> Étude de cas</a></li>
+            <li><a href="ressources.html"><i class="fas fa-book"></i> Ressources</a></li>
         </ul>
     </nav>
 
     <main class="container">
 
-        <!-- PREREQUIS -->
+        <!-- INTRODUCTION -->
         <section>
-            <h2>Prérequis généraux</h2>
+            <h2>Introduction à l'installation d'Artifactory</h2>
+            <p>
+                Artifactory peut être installé de plusieurs manières selon vos besoins :
+                <strong>via Docker</strong> (recommandé pour le développement et les tests),
+                <strong>en package natif</strong> (pour la production), ou
+                <strong>en tant que service cloud</strong> (JFrog Cloud).
+                Ce guide couvre l'installation via Docker qui est la méthode la plus simple et portable.
+            </p>
+
+            <h3>Choix de l'édition</h3>
             <ul>
-                <li>4 Go de RAM minimum</li>
-                <li>Docker installé</li>
-                <li>Navigateur web récent</li>
-                <li>Connexion Internet</li>
+                <li><strong>Artifactory OSS (Open Source)</strong> : Version communautaire gratuite avec fonctionnalités
+                    de base</li>
+                <li><strong>Artifactory Pro</strong> : Édition payante avec haute disponibilité, réplication, et support
+                    multi-site</li>
+                <li><strong>Artifactory Enterprise</strong> : Édition complète avec Xray, Mission Control, et support
+                    avancé</li>
+                <li><strong>Artifactory Cloud</strong> : Version SaaS managée par JFrog</li>
+            </ul>
+            <p>Dans ce guide, nous utiliserons l'édition <strong>OSS</strong> qui est gratuite et suffisante pour
+                l'apprentissage.</p>
+        </section>
+
+        <!-- PREREQUIS ENRICHIS -->
+        <section>
+            <h2>Prérequis détaillés</h2>
+
+            <h3>Configuration système minimale :</h3>
+            <ul>
+                <li><strong>RAM</strong> : 4 Go minimum (8 Go recommandé)</li>
+                <li><strong>CPU</strong> : 2 cœurs minimum (4 cœurs recommandés)</li>
+                <li><strong>Stockage</strong> : 20 Go d'espace libre minimum pour les artefacts</li>
+                <li><strong>Système d'exploitation</strong> : Windows 10/11, macOS 10.15+, Ubuntu 18.04+, RHEL/CentOS 7+
+                </li>
+                <li><strong>Docker</strong> : Version 20.10+</li>
+                <li><strong>Navigateur</strong> : Chrome 90+, Firefox 88+, Safari 14+, Edge 90+</li>
+                <li><strong>Connexion réseau</strong> : Accès à internet pour télécharger Docker et les images</li>
+            </ul>
+
+            <h3>Prérequis spécifiques par OS :</h3>
+            <ul>
+                <li><strong>Windows</strong> : WSL 2 activé, Hyper-V disponible</li>
+                <li><strong>macOS</strong> : Pour Apple Silicon (M1/M2/M3), Docker Desktop 4.3+</li>
+                <li><strong>Linux</strong> : Docker Engine installé, permissions sudo configurées</li>
+            </ul>
+
+            <h3>Ports nécessaires :</h3>
+            <ul>
+                <li><strong>8081</strong> : Interface web et API REST</li>
+                <li><strong>8082</strong> : Accès Docker Registry (optionnel mais recommandé)</li>
+                <li><strong>8085</strong> : Métriques Prometheus (si activé)</li>
+                <li><strong>8040</strong> : Accès SSH (pour certaines configurations avancées)</li>
+            </ul>
+            <p>Assurez-vous que ces ports ne sont pas déjà utilisés par d'autres applications.</p>
+        </section>
+
+        <!-- WINDOWS ENRICHIE -->
+        <section>
+            <h2>Installation sur Windows (Guide Complet)</h2>
+
+            <h3>Étape 1 : Préparer l'environnement Windows</h3>
+            <p>
+                Windows nécessite WSL 2 (Windows Subsystem for Linux) pour Docker. Vérifiez si votre système est
+                compatible :
+            </p>
+            <pre><code># Vérifier la version de Windows
+                winver
+                # Doit être Windows 10 version 2004 ou supérieure, ou Windows 11</code></pre>
+
+            <h3>Étape 2 : Installer Docker Desktop for Windows</h3>
+            <ol>
+                <li>Téléchargez Docker Desktop depuis <a
+                        href="https://www.docker.com/products/docker-desktop">docker.com</a></li>
+                <li>Exécutez l'installateur et suivez les étapes</li>
+                <li><strong>Important</strong> : Cochez "Install required Windows components for WSL 2"</li>
+                <li>Redémarrez votre machine lorsque demandé</li>
+                <li>Après le redémarrage, lancez Docker Desktop</li>
+                <li>Allez dans Settings → General et activez "Use WSL 2 based engine"</li>
+            </ol>
+
+            <h3>Étape 3 : Vérifier l'installation Docker</h3>
+            <pre><code># Ouvrir PowerShell ou Terminal Windows
+            docker --version
+            # Doit afficher : Docker version 20.10.x ou supérieur
+
+            docker-compose --version
+            # Vérifier aussi Docker Compose
+
+            # Tester avec un conteneur simple
+            docker run hello-world</code></pre>
+
+            <h3>Étape 4 : Télécharger et lancer Artifactory</h3>
+            <pre><code># Option simple (pour tests)
+                docker run -d ^
+                    --name artifactory ^
+                    -p 8081:8081 ^
+                    -p 8082:8082 ^
+                    docker.bintray.io/jfrog/artifactory-oss:latest</code></pre>
+
+            <p><strong>Configuration recommandée avec persistance des données :</strong></p>
+            <pre><code># Créer des volumes pour la persistance
+                docker volume create artifactory_data
+                docker volume create artifactory_logs
+
+                # Lancer avec volumes montés
+                docker run -d ^
+                    --name artifactory ^
+                    -p 8081:8081 ^
+                    -p 8082:8082 ^
+                    -v artifactory_data:/var/opt/jfrog/artifactory ^
+                    -v artifactory_logs:/var/log/artifactory ^
+                    docker.bintray.io/jfrog/artifactory-oss</code></pre>
+
+            <h3>Étape 5 : Vérifier le statut</h3>
+            <pre><code># Voir les conteneurs en cours d'exécution
+                docker ps
+
+                # Voir les logs d'Artifactory (attendre quelques minutes pour l'initialisation)
+                docker logs artifactory
+
+                # Vérifier la santé du service
+                docker exec artifactory curl http://localhost:8081/artifactory/api/system/ping</code></pre>
+
+            <h3>Étape 6 : Accès initial</h3>
+            <p>Ouvrez votre navigateur et allez à :</p>
+            <pre><code>http://localhost:8081</code></pre>
+            <p>L'initialisation peut prendre 1-2 minutes lors du premier lancement.</p>
+
+            <h3>Optimisations Windows :</h3>
+            <ul>
+                <li>Allouez plus de ressources à Docker dans Settings → Resources (minimum 4 Go RAM)</li>
+                <li>Utilisez WSL 2 backend plutôt que Hyper-V pour de meilleures performances</li>
+                <li>Pour les performances de stockage, montez les volumes sur le système de fichiers Linux</li>
             </ul>
         </section>
 
-        <!-- WINDOWS -->
+        <!-- MACOS ENRICHIE -->
         <section>
-            <h2>Installation sur Windows</h2>
+            <h2>Installation sur macOS (Guide Complet)</h2>
 
-            <h3>Étape 1 : Installer Docker Desktop</h3>
+            <h3>Étape 1 : Choisir la bonne version pour votre architecture</h3>
             <p>
-                Télécharger et installer <strong>Docker Desktop for Windows</strong>.
-                Pendant l’installation, activer <strong>WSL 2</strong>.
+                macOS supporte deux architectures :
             </p>
+            <ul>
+                <li><strong>Intel x86_64</strong> : Pour les Mac avec processeurs Intel</li>
+                <li><strong>Apple Silicon (arm64)</strong> : Pour les Mac M1, M2, M3</li>
+            </ul>
+            <p>Docker Desktop détecte automatiquement l'architecture.</p>
 
-            <h3>Étape 2 : Vérifier Docker</h3>
-            <pre><code>docker --version</code></pre>
+            <h3>Étape 2 : Installer Docker Desktop pour macOS</h3>
+            <ol>
+                <li>Téléchargez depuis <a href="https://www.docker.com/products/docker-desktop">docker.com</a></li>
+                <li>Ouvrez le fichier .dmg et faites glisser Docker dans Applications</li>
+                <li>Lancez Docker depuis Applications</li>
+                <li>Acceptez les privilèges d'administration lorsque demandé</li>
+                <li>Attendez que Docker démarre (icône dans la barre de menu)</li>
+            </ol>
 
-            <h3>Étape 3 : Lancer Artifactory</h3>
-            <pre><code>docker run -d ^
-                --name artifactory ^
-                -p 8081:8081 ^
-                -p 8082:8082 ^
+            <h3>Étape 3 : Configurer Docker Desktop</h3>
+            <pre><code># Dans Docker Desktop, allez dans Settings → Resources
+            # Configurations recommandées :
+            # - RAM : 4 Go minimum (8 Go si disponible)
+            # - CPUs : 2 minimum (4 recommandés)
+            # - Swap : 1 Go
+            # - Disk image size : 64 Go (pour stocker les artefacts)</code></pre>
+
+            <h3>Étape 4 : Installation d'Artifactory</h3>
+            <p><strong>Pour Apple Silicon (M1/M2/M3) :</strong></p>
+            <pre><code># L'image OSS standard fonctionne avec Rosetta 2
+            docker run -d \
+                --name artifactory \
+                -p 8081:8081 \
+                -p 8082:8082 \
+                --platform linux/amd64 \
                 docker.bintray.io/jfrog/artifactory-oss</code></pre>
-            <p>
-                Accès web :
-            </p>
-            <pre><code>http://localhost:8081</code></pre>
-        </section>
 
-        <!-- MACOS -->
-        <section>
-            <h2>Installation sur macOS</h2>
-
-            <h3>Étape 1 : Installer Docker Desktop</h3>
-            <p>
-                Installer Docker Desktop pour macOS (Intel ou Apple Silicon).
-            </p>
-
-            <h3>Étape 2 : Vérifier Docker</h3>
-            <pre><code>docker --version</code></pre>
-
-            <h3>Étape 3 : Lancer Artifactory</h3>
+            <p><strong>Pour Intel :</strong></p>
             <pre><code>docker run -d \
-            --name artifactory \
-            -p 8081:8081 \
-            -p 8082:8082 \
-            docker.bintray.io/jfrog/artifactory-oss</code></pre>
-            <p>
-                Accès web :
-            </p>
-            <pre><code>http://localhost:8081</code></pre>
+                --name artifactory \
+                -p 8081:8081 \
+                -p 8082:8082 \
+                docker.bintray.io/jfrog/artifactory-oss</code></pre>
+
+            <h3>Étape 5 : Configuration avancée macOS</h3>
+            <pre><code># Créer un répertoire local pour la persistance
+            mkdir -p ~/artifactory/data
+            mkdir -p ~/artifactory/logs
+
+            # Lancer avec montage local (recommandé)
+            docker run -d \
+                --name artifactory \
+                -p 8081:8081 \
+                -p 8082:8082 \
+                -v ~/artifactory/data:/var/opt/jfrog/artifactory \
+                -v ~/artifactory/logs:/var/log/artifactory \
+                docker.bintray.io/jfrog/artifactory-oss</code></pre>
+
+            <h3>Étape 6 : Vérification et monitoring</h3>
+            <pre><code># Vérifier que le conteneur tourne
+            docker ps
+
+            # Suivre les logs en temps réel
+            docker logs -f artifactory
+
+            # Tester l'API
+            curl http://localhost:8081/artifactory/api/system/version</code></pre>
         </section>
 
-        <!-- DEBIAN -->
+        <!-- DOCKER COMPOSE AVANCE -->
         <section>
-            <h2>Installation sur Linux (Debian)</h2>
+            <h2>Configuration Docker Compose avancée</h2>
 
-            <h3>Étape 1 : Installer Docker</h3>
-            <pre><code>sudo apt update
-            sudo apt install docker.io -y
-            sudo systemctl start docker
-            sudo systemctl enable docker</code></pre>
+            <h3>Configuration complète pour développement :</h3>
+            <pre><code>version: '3.8'
+services:
+artifactory:
+image: docker.bintray.io/jfrog/artifactory-oss:7.49.6
+container_name: artifactory
+hostname: artifactory.local
+ports:
+- "8081:8081" # UI et API
+- "8082:8082" # Docker Registry
+- "8040:8040" # SSH (optionnel)
+- "8049:8049" # Eventi (optionnel)
+environment:
+- ARTIFACTORY_HOME=/var/opt/jfrog/artifactory
+- ARTIFACTORY_EXTRA_CONF=/artifactory_extra_conf
+- ARTIFACTORY_JAVA_OPTIONS=-Xms512m -Xmx2g -XX:+UseG1GC
+- JFROG_HOME=/var/opt/jfrog
+- DB_TYPE=derby
+- IS_DOCKER_CONTAINER=true
+volumes:
+- artifactory_data:/var/opt/jfrog/artifactory
+- artifactory_backup:/var/opt/jfrog/artifactory/backup
+- artifactory_logs:/var/log/artifactory
+- ./custom-config:/artifactory_extra_conf
+restart: unless-stopped
+healthcheck:
+test: ["CMD", "curl", "-f", "http://localhost:8081/artifactory/api/system/ping"]
+interval: 30s
+timeout: 10s
+retries: 3
+start_period: 40s
+networks:
+- jfrog-network
 
-            <h3>Étape 2 : Vérifier Docker</h3>
-            <pre><code>docker --version</code></pre>
+postgresql: # Optionnel : pour utiliser PostgreSQL au lieu de Derby
+image: postgres:13-alpine
+container_name: artifactory-postgres
+environment:
+- POSTGRES_DB=artifactory
+- POSTGRES_USER=artifactory
+- POSTGRES_PASSWORD=password
+volumes:
+- postgres_data:/var/lib/postgresql/data
+networks:
+- jfrog-network
 
-            <h3>Étape 3 : Lancer Artifactory</h3>
-            <pre><code>docker run -d \
-            --name artifactory \
-            -p 8081:8081 \
-            -p 8082:8082 \
-            docker.bintray.io/jfrog/artifactory-oss</code></pre>
-            <p>
-                Accès web :
-            </p>
-            <pre><code>http://localhost:8081</code></pre>
+volumes:
+artifactory_data:
+artifactory_backup:
+artifactory_logs:
+postgres_data:
+
+networks:
+jfrog-network:
+driver: bridge
+ipam:
+config:
+- subnet: 172.20.0.0/16</code></pre>
+
+<h3>Variables d'environnement importantes :</h3>
+<ul>
+    <li><strong>ARTIFACTORY_JAVA_OPTIONS</strong> : Options JVM (mémoire, GC)</li>
+    <li><strong>DB_TYPE</strong> : derby (embarqué) ou postgresql (externe)</li>
+    <li><strong>JFROG_HOME</strong> : Répertoire racine JFrog</li>
+    <li><strong>ARTIFACTORY_EXTRA_CONF</strong> : Configuration additionnelle</li>
+</ul>
+</section>
+
+<!-- CONNEXION ET CONFIGURATION INITIALE ENRICHIE -->
+<section>
+    <h2>Configuration initiale d'Artifactory</h2>
+
+    <h3>Première connexion :</h3>
+    <ul>
+        <li><strong>URL</strong> : http://localhost:8081 (ou votre IP serveur)</li>
+        <li><strong>Utilisateur</strong> : admin</li>
+        <li><strong>Mot de passe</strong> : password</li>
+    </ul>
+
+    <h3>Étapes obligatoires après connexion :</h3>
+    <ol>
+        <li><strong>Changer le mot de passe admin</strong> : Sécurité obligatoire</li>
+        <li><strong>Configurer la base de données</strong> : Derby par défaut, configurer PostgreSQL pour la
+            production</li>
+        <li><strong>Configurer les licences</strong> : Pour les éditions Pro/Enterprise</li>
+        <li><strong>Définir l'URL de base</strong> : Important pour les webhooks et notifications</li>
+        <li><strong>Configurer les dépôts par défaut</strong> : Maven, npm, Docker selon vos besoins</li>
+    </ol>
+
+    <h3>Configuration des dépôts initiaux :</h3>
+    <pre><code># Script d'initialisation automatique (optionnel)
+    # Peut être placé dans /artifactory_extra_conf/bootstrap.bash
+    #!/bin/bash
+    curl -u admin:password -X POST "http://localhost:8081/artifactory/api/repositories/maven-local" \
+    -H "Content-Type: application/json" \
+    -d '{"key": "maven-local", "rclass": "local", "packageType": "maven"}'
+
+    curl -u admin:password -X POST "http://localhost:8081/artifactory/api/repositories/npm-local" \
+    -H "Content-Type: application/json" \
+    -d '{"key": "npm-local", "rclass": "local", "packageType": "npm"}'
+
+    curl -u admin:password -X POST "http://localhost:8081/artifactory/api/repositories/docker-local" \
+    -H "Content-Type: application/json" \
+    -d '{"key": "docker-local", "rclass": "local", "packageType": "docker"}'</code></pre>
+</section>
+
+        <!-- VERIFICATION ET TEST ENRICHIE -->
+        <section>
+            <h2>Vérification et tests d'installation</h2>
+
+            <h3>Tests API de base :</h3>
+            <pre><code># Vérifier la version
+curl http://localhost:8081/artifactory/api/system/version
+
+# Vérifier la santé
+curl http://localhost:8081/artifactory/api/system/ping
+
+# Vérifier la configuration système
+curl -u admin:password http://localhost:8081/artifactory/api/system/configuration
+
+# Lister les dépôts
+curl -u admin:password http://localhost:8081/artifactory/api/repositories</code></pre>
+
+            <h3>Tests fonctionnels :</h3>
+            <pre><code># Tester le dépôt Maven
+curl -u admin:password -X PUT "http://localhost:8081/artifactory/maven-local/com/example/test/1.0.0/test-1.0.0.jar" \
+  --data-binary @testfile.jar
+
+# Tester le dépôt Docker
+docker login localhost:8082
+docker tag hello-world localhost:8082/docker-local/hello-world:latest
+docker push localhost:8082/docker-local/hello-world:latest
+
+# Tester le dépôt npm
+npm config set registry http://localhost:8081/artifactory/api/npm/npm-virtual/
+npm install lodash</code></pre>
         </section>
 
-        <!-- IDENTIFIANTS -->
+        <!-- DEPANNAGE ENRICHIE -->
         <section>
-            <h2>Connexion à Artifactory</h2>
+            <h2>Dépannage courant</h2>
+
+            <h3>Problèmes fréquents et solutions :</h3>
+
+            <h4>1. Artifactory ne démarre pas :</h4>
+            <pre><code># Vérifier les logs
+docker logs artifactory
+
+# Vérifier les ports
+netstat -an | grep 8081
+
+# Vérifier les ressources Docker
+docker stats artifactory</code></pre>
+
+            <h4>2. Problèmes de permissions :</h4>
+            <pre><code># Sur Linux, vérifier les permissions des volumes
+ls -la /var/opt/jfrog/
+
+# Corriger les permissions
+sudo chown -R 1030:1030 /var/opt/jfrog/artifactory</code></pre>
+
+            <h4>3. Problèmes de mémoire :</h4>
+            <pre><code># Vérifier la mémoire disponible
+docker stats artifactory
+
+# Ajuster les options JVM
+docker stop artifactory
+docker run ... -e ARTIFACTORY_JAVA_OPTIONS="-Xms1g -Xmx4g" ...</code></pre>
+
+            <h4>4. Connexion impossible à l'interface :</h4>
+            <pre><code># Vérifier si le service répond
+curl -I http://localhost:8081
+
+# Vérifier le firewall
+sudo ufw status
+sudo ufw allow 8081/tcp
+
+# Vérifier SELinux (RHEL/CentOS)
+sudo setsebool -P httpd_can_network_connect 1</code></pre>
+
+            <h4>5. Problèmes Docker sur Windows/macOS :</h4>
             <ul>
-                <li><strong>Utilisateur :</strong> admin</li>
-                <li><strong>Mot de passe :</strong> password</li>
+                <li>Redémarrer Docker Desktop</li>
+                <li>Vérifier que WSL 2 est activé (Windows)</li>
+                <li>Allouer plus de ressources dans Docker Desktop Settings</li>
+                <li>Mettre à jour Docker Desktop vers la dernière version</li>
+            </ul>
+        </section>
+
+        <!-- MISE A JOUR ET MAINTENANCE -->
+        <section>
+            <h2>Mise à jour et maintenance</h2>
+
+            <h3>Procédure de mise à jour :</h3>
+            <pre><code># Sauvegarder les données
+docker exec artifactory tar czf /tmp/artifactory-backup.tar.gz /var/opt/jfrog/artifactory
+docker cp artifactory:/tmp/artifactory-backup.tar.gz .
+
+# Arrêter l'ancien conteneur
+docker stop artifactory
+docker rm artifactory
+
+# Mettre à jour l'image
+docker pull docker.bintray.io/jfrog/artifactory-oss:latest
+
+# Redémarrer avec la nouvelle image
+docker run ... [mêmes paramètres qu'avant]</code></pre>
+
+            <h3>Sauvegarde régulière :</h3>
+            <pre><code># Script de sauvegarde automatique
+#!/bin/bash
+BACKUP_DIR="/backup/artifactory"
+DATE=$(date +%Y%m%d_%H%M%S)
+
+docker exec artifactory tar czf /tmp/artifactory-backup-${DATE}.tar.gz \
+  /var/opt/jfrog/artifactory
+
+docker cp artifactory:/tmp/artifactory-backup-${DATE}.tar.gz ${BACKUP_DIR}
+
+# Nettoyer les vieilles sauvegardes (garder 30 jours)
+find ${BACKUP_DIR} -name "artifactory-backup-*.tar.gz" -mtime +30 -delete</code></pre>
+
+            <h3>Monitoring :</h3>
+            <pre><code># Vérifier l'état santé
+curl -f http://localhost:8081/artifactory/api/system/ping || echo "Échec"
+
+# Vérifier l'espace disque
+df -h /var/opt/jfrog
+
+# Vérifier l'utilisation mémoire
+docker stats artifactory --no-stream
+
+# Vérifier les logs d'erreur
+docker logs artifactory --tail 100 | grep -i error</code></pre>
+        </section>
+
+        <!-- POURQUOI DOCKER ENRICHIE -->
+        <section>
+            <h2>Pourquoi utiliser Docker pour Artifactory ?</h2>
+
+            <h3>Avantages techniques :</h3>
+            <ul>
+                <li><strong>Isolation</strong> : Artifactory s'exécute dans un environnement contrôlé</li>
+                <li><strong>Portabilité</strong> : Même configuration sur tous les OS et environnements</li>
+                <li><strong>Reproductibilité</strong> : Version précise de l'image garantie</li>
+                <li><strong>Rapidité de déploiement</strong> : Installation en minutes au lieu d'heures</li>
+                <li><strong>Facilité de mise à jour</strong> : Simple pull d'une nouvelle image</li>
+                <li><strong>Gestion des dépendances</strong> : Toutes les dépendances incluses dans l'image</li>
+                <li><strong>Scalabilité</strong> : Facile à orchestrer avec Kubernetes pour la haute disponibilité</li>
             </ul>
 
-            <p>
-                Il est recommandé de changer le mot de passe dès la première connexion.
-            </p>
+            <h3>Comparaison avec l'installation native :</h3>
+            <table border="1">
+                <tr>
+                    <th>Critère</th>
+                    <th>Docker</th>
+                    <th>Installation native</th>
+                </tr>
+                <tr>
+                    <td>Temps d'installation</td>
+                    <td>5-10 minutes</td>
+                    <td>30-60 minutes</td>
+                </tr>
+                <tr>
+                    <td>Dépendances système</td>
+                    <td>Aucune (tout inclus)</td>
+                    <td>Java, database, libs système</td>
+                </tr>
+                <tr>
+                    <td>Isolation</td>
+                    <td>Complète (conteneur)</td>
+                    <td>Partielle (système)</td>
+                </tr>
+                <tr>
+                    <td>Mise à jour</td>
+                    <td>docker pull + restart</td>
+                    <td>Procédure complexe</td>
+                </tr>
+                <tr>
+                    <td>Backup/restore</td>
+                    <td>docker cp + volumes</td>
+                    <td>Scripts personnalisés</td>
+                </tr>
+                <tr>
+                    <td>Utilisation en production</td>
+                    <td>Recommandé avec orchestration</td>
+                    <td>Recommandé pour grandes installations</td>
+                </tr>
+            </table>
+
+            <h3>Quand ne PAS utiliser Docker :</h3>
+            <ul>
+                <li>Très grandes installations avec besoins de performances extrêmes</li>
+                <li>Environnements sans support Docker (certains clouds legacy)</li>
+                <li>Besoins de personnalisation très poussée de la JVM</li>
+                <li>Contraintes de sécurité interdisant les conteneurs</li>
+                <li>Intégration avec des systèmes legacy nécessitant un accès direct au système</li>
+            </ul>
         </section>
 
-        <!-- POURQUOI DOCKER -->
+        <!-- PROCHAINES ETAPES -->
         <section>
-            <h2>Pourquoi utiliser Docker ?</h2>
+            <h2>Prochaines étapes après installation</h2>
+
+            <h3>Configuration recommandée :</h3>
+            <ol>
+                <li><strong>Sécurité</strong> : Configurer HTTPS, changer les credentials par défaut</li>
+                <li><strong>Dépôts</strong> : Créer des dépôts virtuels pour chaque technologie utilisée</li>
+                <li><strong>Utilisateurs et permissions</strong> : Configurer RBAC (Role-Based Access Control)</li>
+                <li><strong>Intégration CI/CD</strong> : Configurer Jenkins, GitLab CI, GitHub Actions</li>
+                <li><strong>Monitoring</strong> : Configurer Prometheus/Grafana pour le monitoring</li>
+                <li><strong>Sauvegarde</strong> : Mettre en place une stratégie de backup automatique</li>
+                <li><strong>Haute disponibilité</strong> : Pour la production, configurer un cluster Artifactory</li>
+            </ol>
+
+            <h3>Ressources pour aller plus loin :</h3>
             <ul>
-                <li>Même installation sur tous les OS</li>
-                <li>Rapide et reproductible</li>
-                <li>Très utilisé en DevOps</li>
-                <li>Facile à intégrer en CI/CD</li>
+                <li><a href="utilisation.html">Guide d'utilisation d'Artifactory</a></li>
+                <li><a href="cicd.html">Intégration avec CI/CD</a></li>
+                <li><a href="securite.html">Configuration de sécurité avancée</a></li>
+                <li><a href="https://www.jfrog.com/confluence/display/JFROG/Getting+Started"
+                        target="_blank">Documentation officielle JFrog</a></li>
+                <li><a href="https://github.com/jfrog/artifactory-docker-examples" target="_blank">Exemples Docker sur
+                        GitHub</a></li>
             </ul>
         </section>
 
     </main>
-
 
 </body>
 

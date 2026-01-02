@@ -2,36 +2,37 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Artifactory – Concepts clés</title>
+  <title>Artifactory – Guide Complet | Repository Manager JFrog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guide complet sur JFrog Artifactory : référentiel binaire, gestion d'artefacts, intégration DevOps et bonnes pratiques">
   <link rel="stylesheet" href="../Assets/style/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <header class="header">
   <h1>Artifactory</h1>
-  <p>Concepts clés et fondamentaux</p>
+  <p>Le référentiel binaire universel pour l'ère DevOps et Cloud Native</p>
 </header>
 
-<nav class="navbar">
-  <ul>
-    <li><a href="../index.html">Accueil</a></li>
-    <li><a href="devops.html">DevOps</a></li>
-    <li><a href="artifactory.html" class="active">Artifactory</a></li>
-    <li><a href="installation.html">Installation</a></li>
-    <li><a href="utilisation.html">Utilisation</a></li>
-    <li><a href="cicd.html">CI/CD</a></li>
-    <li><a href="securite.html">Sécurité</a></li>
-    <li><a href="Etude_cas.html">Étude de cas</a></li>
-    <li><a href="ressources.html">Ressources</a></li>
-  </ul>
-</nav>
-
+  <nav class="navbar">
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
+            <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+            <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
+            <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
+            <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+            <li><a href="securite.html"><i class="fas fa-shield-alt"></i> Sécurité</a></li>
+            <li><a href="Etude_cas.html"><i class="fas fa-chart-line"></i> Étude de cas</a></li>
+            <li><a href="ressources.html"><i class="fas fa-book"></i> Ressources</a></li>
+        </ul>
+    </nav>
 <main class="container">
 
-  <!-- SECTION 1 -->
+  <!-- SECTION 1 - INTRODUCTION ENRICHIE -->
   <section>
-    <h2>Qu'est-ce qu'Artifactory ?</h2>
+    <h2 class="">Qu'est-ce qu'Artifactory ?</h2>
     <p>
       <strong>Artifactory</strong> est un référentiel binaire (ou <em>repository manager</em>) développé par JFrog. 
       Il permet de stocker, gérer et distribuer des artefacts logiciels (fichiers binaires, librairies, packages, conteneurs, etc.) 
@@ -45,12 +46,21 @@
     </p>
 
     <p>
-      Dans une démarche DevOps, Artifactory agit comme <strong>un point central entre le build et le déploiement</strong> 
-      et constitue l'épine dorsale de la gestion des artefacts dans les organisations qui font du développement logiciel à grande échelle.
+      Dans une démarche DevOps, Artifactory agit comme <strong>l'épine dorsale de la chaîne d'approvisionnement logicielle</strong> 
+      (Software Supply Chain). Il n'est pas seulement un stockage, mais une <strong>plateforme de gouvernance des artefacts</strong> 
+      qui assure la traçabilité, la sécurité et la conformité tout au long du cycle de vie des applications.
     </p>
+
+    <h3>Différences clés avec les solutions alternatives</h3>
+    <ul>
+      <li><strong>Nexus Repository Manager</strong> : Artifactory supporte plus de formats natifs (30+ vs 20) et offre une interface plus moderne</li>
+      <li><strong>Git LFS</strong> : Artifactory est conçu spécifiquement pour les artefacts binaires avec gestion de version avancée</li>
+      <li><strong>S3 Buckets simples</strong> : Artifactory ajoute la gestion des métadonnées, la recherche, les permissions et l'intégration CI/CD</li>
+      <li><strong>Docker Registry</strong> : Artifactory supporte Docker mais aussi tous les autres formats dans une même interface</li>
+    </ul>
   </section>
 
-  <!-- SECTION 2 -->
+  <!-- SECTION 2 - ARTEFACTS ENRICHIE -->
   <section>
     <h2>Qu'est-ce qu'un artefact ?</h2>
     <p>
@@ -64,134 +74,315 @@
       <li><strong>Code compilé / Packages</strong> : Fichiers <code>.jar</code> (Java), <code>.exe/.dll</code> (Windows),
          <code>.npm</code> (JavaScript), <code>.whl/.egg</code> (Python), <code>.nupkg</code> (.NET)</li>
       <li><strong>Conteneurs</strong> : Images Docker, fichiers OCI</li>
-      <li><strong>Paquets d'infrastructure</strong> : Templates Helm (Kubernetes), modules Terraform</li>
+      <li><strong>Paquets d'infrastructure</strong> : Templates Helm (Kubernetes), modules Terraform, playbooks Ansible</li>
       <li><strong>Builds d'applications</strong> : Applications mobiles (<code>.apk</code>, <code>.ipa</code>), applications web (fichiers WAR, EAR)</li>
-      <li><strong>Métadonnées et rapports</strong> : Rapports de tests, documentation générée</li>
+      <li><strong>Métadonnées et rapports</strong> : Rapports de tests, documentation générée, logs de build</li>
+      <li><strong>Assets multimédia</strong> : Images, polices, configurations pour les applications</li>
     </ul>
 
-    <p>
-      Un artefact se caractérise par : être <strong>versionné</strong> 
-      (identifié par un numéro de version), <strong>immuable</strong> (une fois créé, il ne change plus), 
-      <strong>reproductible</strong> et <strong>traçable</strong>.
-    </p>
+    <h3>Propriétés essentielles d'un artefact bien géré :</h3>
+    <ol>
+      <li><strong>Immutabilité</strong> : Une fois créé, un artefact ne doit jamais être modifié</li>
+      <li><strong>Versionnement</strong> : Chaque artefact a un identifiant de version unique</li>
+      <li><strong>Reproductibilité</strong> : Possibilité de reconstruire exactement le même artefact à partir du code source</li>
+      <li><strong>Traçabilité</strong> : Lien clair entre l'artefact et le commit source qui l'a généré</li>
+      <li><strong>Signature</strong> : Vérification de l'intégrité via des signatures cryptographiques</li>
+    </ol>
+
+    <h3>Exemple de métadonnées associées à un artefact dans Artifactory :</h3>
+    <pre><code>{
+  "name": "mon-application",
+  "version": "1.2.3",
+  "buildNumber": "45",
+  "gitCommit": "a1b2c3d4e5f67890123456789abcdef01234567",
+  "builtBy": "jenkins-build-agent-42",
+  "builtOn": "2024-01-15T10:30:00Z",
+  "dependencies": ["spring-boot:2.7.0", "log4j:2.17.1"],
+  "vulnerabilities": 0,
+  "license": "Apache-2.0"
+}</code></pre>
   </section>
 
-  <!-- SECTION 3 -->
+  <!-- SECTION 3 - UTILISATEURS ET CAS D'USAGE ENRICHIE -->
   <section>
     <h2>Qui utilise Artifactory et pourquoi ?</h2>
     
-    <h3>Principaux utilisateurs :</h3>
+    <h3>Principaux utilisateurs et leurs rôles :</h3>
     <ul>
-      <li><strong>Équipes de développement logiciel</strong> : Développeurs qui téléchargent/uploadent des packages</li>
-      <li><strong>DevOps / Ingénieurs CI/CD</strong> : Pour intégrer Artifactory dans Jenkins, GitLab CI, GitHub Actions</li>
-      <li><strong>Équipes de sécurité informatique (DevSecOps)</strong> : Pour scanner les vulnérabilités dans les dépendances</li>
-      <li><strong>Administrateurs système</strong> : Maintenance, sauvegarde, monitoring du serveur Artifactory</li>
+      <li><strong>Développeurs</strong> : Téléchargent des dépendances, publient des artefacts internes</li>
+      <li><strong>DevOps Engineers</strong> : Configurent les pipelines CI/CD, automatisent les déploiements</li>
+      <li><strong>Ingénieurs qualité</strong> : Stockent les rapports de tests, gèrent les artefacts de test</li>
+      <li><strong>Équipes de sécurité (DevSecOps)</strong> : Scannent les vulnérabilités, appliquent les politiques de sécurité</li>
+      <li><strong>Administrateurs système</strong> : Maintenance, sauvegarde, haute disponibilité, monitoring</li>
+      <li><strong>Architectes logiciels</strong> : Définissent les stratégies de gestion des dépendances</li>
+      <li><strong>Équipes de conformité</strong> : Vérifient les licences, génèrent des rapports d'audit</li>
     </ul>
 
-    <h3>Types d'organisations qui l'utilisent :</h3>
+    <h3>Cas d'usage avancés :</h3>
     <ul>
-      <li>Grandes entreprises tech (Google, Netflix, Amazon, Tesla)</li>
-      <li>Banques et institutions financières (pour le contrôle strict des dépendances)</li>
-      <li>Sociétés de logiciels (Adobe, Cisco, VMware)</li>
-      <li>Organisations gouvernementales (pour la sécurité et la traçabilité)</li>
-      <li>Startups tech (celles avec des microservices et besoins CI/CD avancés)</li>
+      <li><strong>Promotion d'artefacts</strong> : Déplacement contrôlé d'artefacts entre dépôts (Dev → Test → Prod)</li>
+      <li><strong>Géo-réplication</strong> : Synchronisation des artefacts entre sites distants pour la performance</li>
+      <li><strong>Snapshot management</strong> : Nettoyage automatique des snapshots obsolètes</li>
+      <li><strong>Fédération de dépôts</strong> : Agrégation de multiples instances Artifactory</li>
+      <li><strong>Cache distribué</strong> : Réduction de la bande passante pour les équipes distribuées</li>
+      <li><strong>Audit et conformité</strong> : Traces détaillées de qui a téléchargé/uploadé quel artefact et quand</li>
     </ul>
 
-    <h3>Pourquoi utiliser Artifactory ?</h3>
+    <h3>Organisations leaders utilisant Artifactory :</h3>
     <ul>
-      <li><strong>Centraliser tous les artefacts</strong> : Source de vérité unique pour tous les binaires</li>
-      <li><strong>Garantir la cohérence des versions</strong> : Éviter les conflits de versions</li>
-      <li><strong>Éviter les dépendances cassées</strong> : Cache intelligent des dépôts publics</li>
-      <li><strong>Faciliter l'automatisation CI/CD</strong> : Intégration native avec les outils de pipeline</li>
-      <li><strong>Assurer la traçabilité des builds</strong> : Lien entre code source et binaire déployé</li>
-      <li><strong>Sécuriser la supply chain logicielle</strong> : Scan des vulnérabilités, contrôle d'accès</li>
+      <li><strong>Google</strong> : Pour gérer des millions de builds quotidiens</li>
+      <li><strong>Netflix</strong> : Gestion des microservices et conteneurs à grande échelle</li>
+      <li><strong>Tesla</strong> : Développement logiciel embarqué pour véhicules</li>
+      <li><strong>Adobe</strong> : Suite Creative Cloud et applications d'entreprise</li>
+      <li><strong>Bancaires (JPMorgan, Goldman Sachs)</strong> : Contrôle strict, sécurité et conformité</li>
+      <li><strong>Gouvernement US</strong> : Conformité FedRAMP et sécurité nationale</li>
     </ul>
-  </section>
 
-  <!-- SECTION 4 -->
-  <section>
-    <h2>Types de dépôts dans Artifactory</h2>
-
-    <h3>Dépôt Local</h3>
-    <p>
-      Contient les artefacts produits en interne par l'entreprise (résultat des builds).
-    </p>
-
-    <h3>Dépôt Remote</h3>
-    <p>
-      Sert de proxy vers des dépôts externes (Maven Central, npm registry, Docker Hub).
-      Permet de mettre en cache les dépendances et d'accélérer les builds.
-    </p>
-
-    <h3>Dépôt Virtuel</h3>
-    <p>
-      Regroupe plusieurs dépôts locaux et distants en un seul point d'accès.
-      Simplifie la configuration des outils clients.
-    </p>
-  </section>
-
-  <!-- SECTION 5 -->
-  <section>
-    <h2>Formats supportés par Artifactory</h2>
-    <p>Artifactory gère plus de 30 formats de packages différents :</p>
+    <h3>Bénéfices mesurables :</h3>
     <ul>
-      <li>Maven / Gradle (Java)</li>
-      <li>npm / yarn (JavaScript)</li>
-      <li>Docker (conteneurs)</li>
-      <li>PyPI (Python)</li>
-      <li>NuGet (.NET)</li>
-      <li>Helm (Kubernetes)</li>
-      <li>RPM / DEB (packages système)</li>
-      <li>Composer (PHP)</li>
-      <li>RubyGems (Ruby)</li>
-      <li>Go modules</li>
+      <li><strong>Réduction de 70-80% du temps de build</strong> grâce au caching intelligent</li>
+      <li><strong>Élimination des builds cassés</strong> par des dépendances disparues</li>
+      <li><strong>Réduction de 95% des vulnérabilités</strong> via le scanning automatique</li>
+      <li><strong>Économies de bande passante</strong> de 90% pour les équipes distribuées</li>
+      <li><strong>Conformité accélérée</strong> : Rapports d'audit générés automatiquement</li>
     </ul>
   </section>
 
-  <!-- SECTION 6 -->
+  <!-- SECTION 4 - TYPES DE DEPOTS ENRICHIE -->
   <section>
-    <h2>Évolution historique et besoins adressés</h2>
+    <h2>Architecture des dépôts dans Artifactory</h2>
+
+    <h3>Dépôt Local (Local Repository)</h3>
+    <p>
+      Contient les artefacts produits en interne par l'entreprise. C'est la source de vérité pour vos binaires.
+    </p>
+    <ul>
+      <li><strong>Types</strong> : Release (versions stables), Snapshot (builds temporaires)</li>
+      <li><strong>Politiques de rétention</strong> : Conservation définie par stratégie métier</li>
+      <li><strong>Exemples</strong> : libs-release-local, docker-local, npm-internal</li>
+    </ul>
+
+    <h3>Dépôt Distant (Remote Repository)</h3>
+    <p>
+      Sert de proxy vers des dépôts externes avec mise en cache intelligente.
+    </p>
+    <ul>
+      <li><strong>Bénéfices</strong> : Cache local, contrôle d'accès, isolation réseau</li>
+      <li><strong>Exemples de sources</strong> : Maven Central, npmjs.org, Docker Hub, PyPI</li>
+      <li><strong>Mode offline</strong> : Continue à fonctionner même si la source externe est indisponible</li>
+    </ul>
+
+    <h3>Dépôt Virtuel (Virtual Repository)</h3>
+    <p>
+      Agrège plusieurs dépôts locaux et distants en un point d'accès unique.
+    </p>
+    <ul>
+      <li><strong>Résolution intelligente</strong> : Cherche d'abord local, puis cache, puis distant</li>
+      <li><strong>Simplification client</strong> : Les outils voient un seul endpoint</li>
+      <li><strong>Exemple</strong> : virtual-maven combine maven-local + maven-remote</li>
+    </ul>
+
+    <h3>Dépôt de Distribution (Distribution Repository)</h3>
+    <p>
+      Spécialisé pour la distribution aux consommateurs finaux.
+    </p>
+    <ul>
+      <li><strong>Bundles</strong> : Regroupement d'artefacts en un package de distribution</li>
+      <li><strong>Signature</strong> : Support natif pour la signature GPG</li>
+      <li><strong>Publication</strong> : Vers Bintray (maintenant intégré) ou autres cibles</li>
+    </ul>
+
+    <h3>Hiérarchie typique dans une organisation :</h3>
+    <pre><code>virtual-maven
+├── maven-releases-local      (artefacts internes stables)
+├── maven-snapshots-local     (artefacts internes en développement)
+├── maven-central-remote      (cache de Maven Central)
+└── jcenter-remote            (cache de JCenter)</code></pre>
+  </section>
+
+  <!-- SECTION 5 - FORMATS SUPPORTES ENRICHIE -->
+  <section>
+    <h2>Écosystème de formats supportés</h2>
+    <p>Artifactory gère plus de 30 formats de packages avec support natif :</p>
     
-    <h3>Problèmes avant Artifactory (années 2000) :</h3>
+    <h3>Principaux écosystèmes :</h3>
     <ul>
-      <li><strong>"Dependency Hell"</strong> : Développeurs téléchargeaient des librairies depuis internet sans contrôle</li>
-      <li><strong>Builds non reproductibles</strong> : Une librairie pouvait disparaître d'un dépôt public</li>
-      <li><strong>Gestion chaotique des artefacts internes</strong> : Partage via serveur FTP, email, clés USB</li>
-      <li><strong>Manque de traçabilité</strong> : Impossible de savoir quelle version exacte était en production</li>
-      <li><strong>Performance des builds</strong> : Tous les développeurs téléchargeaient les mêmes dépendances</li>
+      <li><strong>Java/JVM</strong> : Maven, Gradle, Ivy, SBT (fichiers .jar, .war, .ear, .pom)</li>
+      <li><strong>JavaScript/Node.js</strong> : npm, Yarn, Bower (fichiers .tgz, métadonnées package.json)</li>
+      <li><strong>Conteneurs</strong> : Docker, OCI, Podman (images, manifests, layers)</li>
+      <li><strong>Python</strong> : PyPI, pip, conda (fichiers .whl, .egg, .tar.gz)</li>
+      <li><strong>.NET</strong> : NuGet, Chocolatey (fichiers .nupkg)</li>
+      <li><strong>Kubernetes</strong> : Helm, Kustomize (charts, configurations)</li>
+      <li><strong>Infrastructure as Code</strong> : Terraform, Ansible (modules, roles, collections)</li>
+      <li><strong>Système</strong> : RPM, DEB, Alpine APK (packages système)</li>
+      <li><strong>PHP</strong> : Composer, PEAR (fichiers .zip, métadonnées composer.json)</li>
+      <li><strong>Ruby</strong> : RubyGems (fichiers .gem)</li>
+      <li><strong>Go</strong> : Go modules, dep (fichiers .zip avec code source)</li>
+      <li><strong>Swift/Objective-C</strong> : CocoaPods, Carthage</li>
     </ul>
 
-    <h3>Évolution des besoins :</h3>
+    <h3>Formats génériques :</h3>
     <ul>
-      <li><strong>Phase 1 (2008-2012)</strong> : Répondre aux besoins Java/Enterprise (Maven)</li>
-      <li><strong>Phase 2 (2012-2015)</strong> : Multi-technologies et DevOps</li>
-      <li><strong>Phase 3 (2015-2020)</strong> : Containers, Cloud et Sécurité</li>
-      <li><strong>Phase 4 (2020-présent)</strong> : Plateforme complète et hybride</li>
+      <li><strong>Generic Repository</strong> : Tout type de fichier binaire ou texte</li>
+      <li><strong>Checksums</strong> : Support natif MD5, SHA1, SHA256</li>
+      <li><strong>Properties</strong> : Métadonnées personnalisées attachées aux artefacts</li>
+    </ul>
+
+    <h3>Intégrations natives avancées :</h3>
+    <ul>
+      <li><strong>Build Info</strong> : Métadonnées de build depuis Jenkins, GitLab CI, GitHub Actions</li>
+      <li><strong>Xray</strong> : Scanning de vulnérabilités et de licences</li>
+      <li><strong>Distribution</strong> : Publication vers différents canaux</li>
+      <li><strong>Event-driven</strong> : Webhooks pour intégrations personnalisées</li>
     </ul>
   </section>
 
-  <!-- SECTION 7 -->
+  <!-- SECTION 6 - EVOLUTION HISTORIQUE ENRICHIE -->
   <section>
-    <h2>Cycle de vie typique d'un artefact</h2>
-    <pre><code>Code source → Compilation/Build → Artefact → Stockage (Artifactory) → Déploiement → Production</code></pre>
+    <h2>Évolution historique et vision stratégique</h2>
+    
+    <h3>Problématiques historiques (années 2000) :</h3>
+    <ul>
+      <li><strong>"Dependency Hell"</strong> : Conflits de versions, builds non reproductibles</li>
+      <li><strong>Point unique de défaillance</strong> : Dépendance à des dépôts externes non fiables</li>
+      <li><strong>Manque de gouvernance</strong> : Aucun contrôle sur ce qui entre dans les builds</li>
+      <li><strong>Performance réseau</strong> : Téléchargements répétés des mêmes dépendances</li>
+      <li><strong>Traçabilité absente</strong> : Impossible de reproduire un build de production</li>
+    </ul>
 
-    <h3>Exemple concret pour une application Java :</h3>
+    <h3>Évolution par décennie :</h3>
+    
+    <h4>Phase 1 : L'ère Java Enterprise (2008-2012)</h4>
+    <ul>
+      <li>Focus sur Maven et l'écosystème Java</li>
+      <li>Résolution du "JAR Hell"</li>
+      <li>Adoption par les grandes entreprises Java</li>
+    </ul>
+    
+    <h4>Phase 2 : Multi-technologies et DevOps (2013-2016)</h4>
+    <ul>
+      <li>Support étendu à npm, Docker, NuGet</li>
+      <li>Intégration avec Jenkins et outils CI/CD</li>
+      <li>Adoption par les startups tech et scale-ups</li>
+    </ul>
+    
+    <h4>Phase 3 : Cloud Native et Sécurité (2017-2020)</h4>
+    <ul>
+      <li>Support Kubernetes (Helm), Serverless</li>
+      <li>JFrog Xray pour la sécurité</li>
+      <li>Distribution cloud (Artifactory Cloud)</li>
+      <li>Adoption massive par les organisations cloud-native</li>
+    </ul>
+    
+    <h4>Phase 4 : Plateforme universelle et hybride (2021-présent)</h4>
+    <ul>
+      <li>Support de 30+ formats natifs</li>
+      <li>Plateforme JFrog complète (Xray, Pipelines, Distribution)</li>
+      <li>Multi-cloud et hybride</li>
+      <li>Focus sur la Software Supply Chain Security</li>
+    </ul>
+
+    <h3>Tendances futures :</h3>
+    <ul>
+      <li><strong>SBOM (Software Bill of Materials)</strong> : Génération automatique</li>
+      <li><strong>ML/AOP</strong> : Détection intelligente d'anomalies</li>
+      <li><strong>GitOps intégré</strong> : Synchronisation avec les repositories Git</li>
+      <li><strong>Edge Computing</strong> : Distribution vers la périphérie</li>
+      <li><strong>Quantum-safe cryptography</strong> : Préparation pour l'ère post-quantique</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 7 - CYCLE DE VIE ENRICHIE -->
+  <section>
+    <h2>Cycle de vie complet d'un artefact</h2>
+    
+    <h3>Workflow typique d'un artefact Java/Maven :</h3>
     <ol>
-      <li>Développeur écrit du code Java (<code>.java</code>)</li>
-      <li>Maven/Gradle compile → produit un fichier <code>.jar</code></li>
-      <li>Ce <code>.jar</code> est <strong>l'artefact</strong></li>
-      <li>Il est stocké dans Artifactory avec une version (ex: monapp-1.0.0.jar)</li>
-      <li>L'artefact est déployé sur un serveur</li>
-      <li>En production, c'est cet artefact précis qui est exécuté</li>
+      <li><strong>Développement</strong> : Commit Git avec code source (.java)</li>
+      <li><strong>Intégration Continue</strong> : Build Jenkins/GitLab CI</li>
+      <li><strong>Production d'artefact</strong> : Maven génère monapp-1.0.0.jar</li>
+      <li><strong>Stockage</strong> : Upload vers Artifactory (maven-snapshots-local)</li>
+      <li><strong>Tests</strong> : Téléchargement par l'environnement de test</li>
+      <li><strong>Promotion</strong> : Déplacement vers maven-releases-local après validation</li>
+      <li><strong>Signature</strong> : Signature GPG pour intégrité</li>
+      <li><strong>Scanning</strong> : Analyse sécurité avec JFrog Xray</li>
+      <li><strong>Distribution</strong> : Déploiement vers les environnements</li>
+      <li><strong>Production</strong> : Exécution en environnement live</li>
+      <li><strong>Surveillance</strong> : Monitoring des performances</li>
+      <li><strong>Archivage</strong> : Déplacement vers le cold storage après obsolescence</li>
     </ol>
 
-    <h3>Schéma simplifié du fonctionnement :</h3>
-    <p>
-      Développeur → CI (Build) → <strong>Artifactory</strong> → Déploiement
-    </p>
-    <p>
-      Artifactory devient la <strong>source unique de vérité pour les binaires</strong>.
-    </p>
+    <h3>Diagramme du flux DevOps intégré :</h3>
+    <pre><code>Git Repository
+    │
+    ▼ (trigger sur commit)
+CI/CD Pipeline (Jenkins/GitLab CI/GitHub Actions)
+    │
+    ▼ (build et tests)
+Artifactory (Source of Truth)
+    ├──▶ Environnement de Développement
+    ├──▶ Environnement de Test
+    ├──▶ Environnement de Staging
+    └──▶ Environnement de Production
+    │
+    ▼ (monitoring)
+Logs et Métriques (Prometheus/Grafana)
+    │
+    ▼ (feedback)
+Amélioration continue</code></pre>
+
+    <h3>Bonnes pratiques de gestion :</h3>
+    <ul>
+      <li><strong>Immutabilité stricte</strong> : Jamais de modification d'artefact existant</li>
+      <li><strong>Versionnement sémantique</strong> : Suivre Semantic Versioning (MAJOR.MINOR.PATCH)</li>
+      <li><strong>Build Once, Deploy Many</strong> : Un seul artefact pour tous les environnements</li>
+      <li><strong>Promotion manuelle</strong> : Validation humaine avant production</li>
+      <li><strong>Rétention définie</strong> : Politique claire de conservation/archivage</li>
+      <li><strong>Backup régulier</strong> : Plan de reprise après sinistre</li>
+    </ul>
+
+    <h3>Mesures de succès clés (KPIs) :</h3>
+    <ul>
+      <li><strong>Lead Time</strong> : Temps entre commit et déploiement en production</li>
+      <li><strong>Build Success Rate</strong> : Pourcentage de builds réussis</li>
+      <li><strong>Cache Hit Ratio</strong> : Efficacité du cache des dépendances</li>
+      <li><strong>Vulnerability Count</strong> : Nombre de vulnérabilités détectées/résolues</li>
+      <li><strong>Storage Efficiency</strong> : Utilisation optimale de l'espace de stockage</li>
+      <li><strong>Availability</strong> : Temps de fonctionnement (uptime) du référentiel</li>
+    </ul>
+  </section>
+
+  <!-- NOUVELLE SECTION 8 - INTEGRATION AVEC L'ECOSYSTEME -->
+  <section>
+    <h2>Intégration avec l'écosystème DevOps</h2>
+    
+    <h3>Intégrations CI/CD natives :</h3>
+    <ul>
+      <li><strong>Jenkins</strong> : Plugin officiel JFrog, pipeline DSL</li>
+      <li><strong>GitLab CI/CD</strong> : Intégration native, template de pipeline</li>
+      <li><strong>GitHub Actions</strong> : Actions officielles JFrog</li>
+      <li><strong>Azure DevOps</strong> : Tasks dédiées dans les pipelines</li>
+      <li><strong>TeamCity</strong> : Plugin et runner dédiés</li>
+      <li><strong>Bamboo</strong> : Tasks et plan intégrés</li>
+    </ul>
+
+    <h3>Outils de build et développement :</h3>
+    <ul>
+      <li><strong>Maven/Gradle</strong> : Configuration via settings.xml/build.gradle</li>
+      <li><strong>npm/yarn</strong> : Configuration .npmrc</li>
+      <li><strong>Docker</strong> : Configuration daemon.json / docker login</li>
+      <li><strong>pip/conda</strong> : Configuration pip.conf / .condarc</li>
+      <li><strong>IDE</strong> : Plugins IntelliJ, Eclipse, VS Code</li>
+    </ul>
+
+    <h3>Écosystème JFrog complet :</h3>
+    <ul>
+      <li><strong>JFrog Xray</strong> : Analyse de sécurité et conformité</li>
+      <li><strong>JFrog Pipelines</strong> : Orchestration CI/CD native</li>
+      <li><strong>JFrog Distribution</strong> : Distribution multi-canal</li>
+      <li><strong>JFrog Mission Control</strong> : Management multi-instance</li>
+      <li><strong>JFrog Connect</strong> : Gestion d'appareils edge/IoT</li>
+    </ul>
   </section>
 
 </main>

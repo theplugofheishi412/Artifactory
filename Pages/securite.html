@@ -5,6 +5,7 @@
   <title>Sécurité – Artifactory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Assets/style/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -15,15 +16,15 @@
 
 <nav class="navbar">
   <ul>
-    <li><a href="../index.html">Accueil</a></li>
-    <li><a href="devops.html">DevOps</a></li>
-    <li><a href="artifactory.html">Artifactory</a></li>
-    <li><a href="installation.html">Installation</a></li>
-    <li><a href="utilisation.html">Utilisation</a></li>
-    <li><a href="cicd.html">CI/CD</a></li>
-    <li><a href="securite.html" class="active">Sécurité</a></li>
-    <li><a href="Etude_cas.html">Étude de cas</a></li>
-    <li><a href="ressources.html">Ressources</a></li>
+    <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+    <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
+    <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+    <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
+    <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
+    <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+    <li><a href="securite.html"><i class="fas fa-shield-alt"></i> Sécurité</a></li>
+    <li><a href="Etude_cas.html"><i class="fas fa-chart-line"></i> Étude de cas</a></li>
+    <li><a href="ressources.html"><i class="fas fa-book"></i> Ressources</a></li>
   </ul>
 </nav>
 
@@ -32,45 +33,78 @@
   <section>
     <h2>Gestion des utilisateurs</h2>
     <p>
-      Artifactory permet de créer plusieurs utilisateurs
-      avec des rôles spécifiques.
+      Artifactory permet de créer plusieurs utilisateurs avec des rôles spécifiques afin de mieux gérer les accès et responsabilités. Chaque utilisateur peut être assigné à un ou plusieurs groupes selon son rôle.
     </p>
     <ul>
-      <li>Administrateur</li>
-      <li>Développeur</li>
-      <li>Utilisateur en lecture seule</li>
+      <li><strong>Administrateur :</strong> Accès complet, peut créer, modifier et supprimer des artefacts et utilisateurs.</li>
+      <li><strong>Développeur :</strong> Peut publier et télécharger des artefacts dans les dépôts autorisés.</li>
+      <li><strong>Utilisateur en lecture seule :</strong> Accès uniquement pour consulter et télécharger les artefacts.</li>
     </ul>
   </section>
 
   <section>
     <h2>Rôles et permissions</h2>
     <p>
-      Chaque utilisateur doit avoir uniquement
-      les droits nécessaires à son rôle.
+      La définition correcte des rôles et permissions est essentielle pour sécuriser votre instance Artifactory. Il est recommandé de respecter le principe du moindre privilège.
     </p>
+    <ul>
+      <li>Attribuer uniquement les permissions nécessaires à chaque rôle.</li>
+      <li>Éviter les permissions globales, surtout pour les développeurs et utilisateurs standards.</li>
+      <li>Utiliser des groupes pour gérer facilement les droits par équipe ou projet.</li>
+    </ul>
   </section>
 
   <section>
     <h2>Sécurisation des accès</h2>
+    <p>
+      Artifactory offre plusieurs mécanismes pour sécuriser l’accès aux artefacts et protéger vos dépôts.
+    </p>
     <ul>
-      <li>Changement du mot de passe par défaut</li>
-      <li>Utilisation de HTTPS</li>
-      <li>Restriction par IP</li>
+      <li>Changer immédiatement le mot de passe par défaut après l’installation.</li>
+      <li>Forcer l’utilisation de HTTPS pour toutes les connexions.</li>
+      <li>Limiter l’accès par adresse IP lorsque cela est possible.</li>
+      <li>Activer l’authentification LDAP ou SSO pour centraliser la gestion des utilisateurs.</li>
     </ul>
   </section>
 
   <section>
     <h2>Bonnes pratiques DevOps</h2>
     <ul>
-      <li>Séparer les dépôts (dev / test / prod)</li>
-      <li>Ne jamais supprimer un artefact en production</li>
-      <li>Journaliser les accès</li>
+      <li>Séparer les dépôts selon les environnements : développement, test, production.</li>
+      <li>Ne jamais supprimer un artefact en production, privilégier l’archivage ou la promotion des artefacts.</li>
+      <li>Activer la journalisation et les audits pour suivre toutes les opérations sur les dépôts.</li>
+      <li>Automatiser la promotion des artefacts via les pipelines CI/CD.</li>
+      <li>Mettre en place des scans de sécurité pour détecter les vulnérabilités dans les dépendances.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Intégration avec les outils CI/CD</h2>
+    <p>
+      Artifactory s’intègre facilement avec les outils de CI/CD tels que Jenkins, GitLab CI, Bamboo ou Azure DevOps.
+      Cette intégration permet :
+    </p>
+    <ul>
+      <li>Automatisation du build et du déploiement des artefacts.</li>
+      <li>Gestion des versions et promotion des artefacts selon les pipelines.</li>
+      <li>Suivi complet des dépendances et versions utilisées dans chaque build.</li>
+      <li>Possibilité de créer des dépôts virtuels combinant plusieurs dépôts physiques.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Acronymes courants dans Artifactory</h2>
+    <ul>
+      <li><strong>CI :</strong> Continuous Integration (Intégration Continue)</li>
+      <li><strong>CD :</strong> Continuous Delivery / Deployment (Livraison / Déploiement Continu)</li>
+      <li><strong>RBAC :</strong> Role-Based Access Control (Contrôle d’accès basé sur les rôles)</li>
+      <li><strong>LDAP :</strong> Lightweight Directory Access Protocol (Protocole d’annuaire)</li>
+      <li><strong>SSO :</strong> Single Sign-On (Authentification unique)</li>
+      <li><strong>API :</strong> Application Programming Interface (Interface de programmation applicative)</li>
     </ul>
   </section>
 
 </main>
-
-
 
 </body>
 </html>

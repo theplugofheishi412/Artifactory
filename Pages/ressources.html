@@ -5,56 +5,67 @@
   <title>Ressources – Artifactory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Assets/style/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <header class="header">
   <h1>Ressources Artifactory</h1>
-  <p>Documentation, outils et supports d’apprentissage</p>
+  <p>Documentation, tutoriels et outils pour maîtriser Artifactory</p>
 </header>
 
 <nav class="navbar">
   <ul>
-    <li><a href="../index.html">Accueil</a></li>
-    <li><a href="devops.html">DevOps</a></li>
-    <li><a href="artifactory.html">Artifactory</a></li>
-    <li><a href="installation.html">Installation</a></li>
-    <li><a href="utilisation.html">Utilisation</a></li>
-    <li><a href="cicd.html">CI/CD</a></li>
-    <li><a href="securite.html">Sécurité</a></li>
-    <li><a href="Etude_cas.html">Étude de cas</a></li>
-    <li><a href="ressources.html" class="active">Ressources</a></li>
-    
+    <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+    <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
+    <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+    <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
+    <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
+    <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+    <li><a href="securite.html"><i class="fas fa-shield-alt"></i> Sécurité</a></li>
+    <li><a href="Etude_cas.html"><i class="fas fa-chart-line"></i> Étude de cas</a></li>
+    <li><a href="ressources.html"><i class="fas fa-book"></i> Ressources</a></li>
   </ul>
 </nav>
 
 <main class="container">
 
-  <!-- DOC OFFICIELLE -->
+  <!-- DOCUMENTATION OFFICIELLE -->
   <section>
-    <h2> Documentation officielle</h2>
+    <h2>Documentation officielle</h2>
     <ul>
       <li>
-        <strong>JFrog Artifactory – Documentation</strong><br>
-       <a href=" https://jfrog.com/help/r/jfrog-artifactory-documentation">Voir Documentation</a>
-       
+        <strong>Documentation complète de JFrog Artifactory</strong><br>
+        <a href="https://jfrog.com/help/r/jfrog-artifactory-documentation" target="_blank">
+          Voir Documentation officielle
+        </a><br>
+        Manuel officiel avec guides, tutoriels et référence complète pour Artifactory.
       </li>
       <li>
-        <strong>Guide d’installation officiel</strong><br>
-       <a href="https://jfrog.com/help/r/jfrog-installation-setup-documentation">Voir Documentation</a>
-        
+        <strong>Documentation Artifactory – Vue d’ensemble</strong><br>
+        <a href="https://jfrog.com/help/r/jfrog-artifactory-documentation/jfrog-artifactory" target="_blank">
+          Voir Documentation Artifactory
+        </a><br>
+        Accès direct aux fonctionnalités principales et aux guides de configuration.
+      </li>
+      <li>
+        <strong>JFrog CLI – Documentation</strong><br>
+        <a href="https://docs.jfrog-applications.jfrog.io/jfrog-applications/jfrog-cli" target="_blank">
+          Voir Documentation JFrog CLI
+        </a><br>
+        Documentation officielle de l’outil en ligne de commande pour automatiser les opérations sur Artifactory.
       </li>
     </ul>
   </section>
 
   <!-- TUTORIELS -->
   <section>
-    <h2> Tutoriels & guides pratiques</h2>
+    <h2>Tutoriels & guides pratiques</h2>
     <ul>
-      <li>Artifactory avec Docker</li>
-      <li>Artifactory & Jenkins</li>
-      <li>Gestion des dépendances Maven</li>
-      <li>Artifactory pour npm et Docker</li>
+      <li><strong>Artifactory avec Docker :</strong> Déploiement d’Artifactory dans un conteneur Docker.</li>
+      <li><strong>Artifactory & Jenkins :</strong> Intégration CI/CD pour automatiser la publication des artefacts.</li>
+      <li><strong>Gestion des dépendances Maven :</strong> Meilleures pratiques pour stocker et gérer vos librairies Java.</li>
+      <li><strong>Artifactory pour npm et Docker :</strong> Guide pour les projets Node.js et conteneurs Docker.</li>
     </ul>
   </section>
 
@@ -62,29 +73,29 @@
   <section>
     <h2>CI/CD & intégrations</h2>
     <ul>
-      <li>Jenkins + Artifactory</li>
-      <li>GitLab CI + Artifactory</li>
-      <li>GitHub Actions + Artifactory</li>
+      <li><strong>Jenkins + Artifactory :</strong> Automatisation complète des builds et publication des artefacts.</li>
+      <li><strong>GitLab CI + Artifactory :</strong> Déploiement continu et gestion des dépendances.</li>
+      <li><strong>GitHub Actions + Artifactory :</strong> Pipelines intégrés pour la livraison continue.</li>
     </ul>
   </section>
 
-  <!-- SECURITE -->
+  <!-- SÉCURITÉ -->
   <section>
-    <h2> Sécurité</h2>
+    <h2>Sécurité & bonnes pratiques</h2>
     <ul>
-      <li>Gestion des utilisateurs et rôles</li>
-      <li>Bonnes pratiques de sécurité DevOps</li>
-      <li>Scan de vulnérabilités (JFrog Xray)</li>
+      <li><strong>Gestion des utilisateurs et rôles :</strong> Contrôle d’accès basé sur les rôles (RBAC).</li>
+      <li><strong>Bonnes pratiques DevOps :</strong> Sécurisation des artefacts et audit des accès.</li>
+      <li><strong>Scan de vulnérabilités :</strong> Utilisation de JFrog Xray pour analyser les dépendances.</li>
     </ul>
   </section>
 
-  <!-- VIDEOS -->
+  <!-- VIDÉOS -->
   <section>
     <h2>Vidéos et démonstrations</h2>
     <ul>
-      <li>Présentation officielle JFrog Artifactory</li>
-      <li>Installation pas à pas (YouTube)</li>
-      <li>Pipeline CI/CD avec Artifactory</li>
+      <li><strong>Présentation officielle :</strong> Vidéo explicative de JFrog Artifactory.</li>
+      <li><strong>Installation pas à pas :</strong> Tutoriel vidéo sur YouTube.</li>
+      <li><strong>Pipeline CI/CD :</strong> Démonstration vidéo de l’intégration avec Jenkins et Artifactory.</li>
     </ul>
   </section>
 
@@ -92,11 +103,11 @@
   <section>
     <h2>Outils complémentaires</h2>
     <ul>
-      <li>JFrog CLI</li>
-      <li>Docker</li>
-      <li>Maven / Gradle</li>
-      <li>Jenkins</li>
-      <li>Git</li>
+      <li><strong>JFrog CLI :</strong> Interface en ligne de commande pour automatiser les opérations sur Artifactory.</li>
+      <li><strong>Docker :</strong> Conteneurs pour exécuter Artifactory et applications dépendantes.</li>
+      <li><strong>Maven / Gradle :</strong> Gestion des dépendances Java et publication vers Artifactory.</li>
+      <li><strong>Jenkins :</strong> Intégration continue et livraison automatisée.</li>
+      <li><strong>Git :</strong> Gestion de versions et collaboration sur le code source.</li>
     </ul>
   </section>
 
@@ -104,14 +115,13 @@
   <section>
     <h2>Livres & lectures recommandées</h2>
     <ul>
-      <li>DevOps Handbook</li>
-      <li>Continuous Delivery – Jez Humble</li>
-      <li>Pro Git</li>
+      <li><strong>DevOps Handbook :</strong> Guide complet des pratiques DevOps.</li>
+      <li><strong>Continuous Delivery – Jez Humble :</strong> Principes pour l’automatisation et la livraison continue.</li>
+      <li><strong>Pro Git :</strong> Maîtriser Git pour la gestion des projets et workflows.</li>
     </ul>
   </section>
 
 </main>
-
 
 </body>
 </html>

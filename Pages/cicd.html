@@ -6,6 +6,7 @@
   <title>Artifactory & CI/CD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Assets/style/styles.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -15,19 +16,19 @@
     <p>Intégration dans un pipeline DevOps</p>
   </header>
 
-  <nav class="navbar">
-    <ul>
-      <li><a href="../index.html">Accueil</a></li>
-      <li><a href="devops.html">DevOps</a></li>
-      <li><a href="artifactory.html">Artifactory</a></li>
-      <li><a href="installation.html">Installation</a></li>
-      <li><a href="utilisation.html">Utilisation</a></li>
-      <li><a href="cicd.html" class="active">CI/CD</a></li>
-      <li><a href="securite.html">Sécurité</a></li>
-      <li><a href="Etude_cas.html">Étude de cas</a></li>
-      <li><a href="ressources.html">Ressources</a></li>
-    </ul>
-  </nav>
+ <nav class="navbar">
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
+            <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+            <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
+            <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
+            <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+            <li><a href="securite.html"><i class="fas fa-shield-alt"></i> Sécurité</a></li>
+            <li><a href="Etude_cas.html"><i class="fas fa-chart-line"></i> Étude de cas</a></li>
+            <li><a href="ressources.html"><i class="fas fa-book"></i> Ressources</a></li>
+        </ul>
+    </nav>
 
   <main class="container">
 
@@ -70,12 +71,14 @@
       </ul>
       
       <p><strong>Exemple de publication :</strong></p>
-      <pre><code># Publication d'un JAR Maven
-mvn deploy -DaltDeploymentRepository='mon-repo::default::http://artifactory/artifactory/libs-release-local'
+      <pre><code>
+      # Publication d'un JAR Maven
+      mvn deploy -DaltDeploymentRepository='mon-repo::default::http://artifactory/artifactory/libs-release-local'
 
-# Push d'une image Docker
-docker tag mon-app:latest artifactory/docker-local/mon-app:1.0.0
-docker push artifactory/docker-local/mon-app:1.0.0</code></pre>
+      # Push d'une image Docker
+      docker tag mon-app:latest artifactory/docker-local/mon-app:1.0.0
+      docker push artifactory/docker-local/mon-app:1.0.0
+</code></pre>
         
       <h4>3. Artifactory → Deployment Tools (Déploiement)</h4>
       <ul>
@@ -85,10 +88,11 @@ docker push artifactory/docker-local/mon-app:1.0.0</code></pre>
       
       <p><strong>Exemple pour Kubernetes :</strong></p>
       <pre><code># Dans un deployment.yaml
-spec:
-  containers:
-  - name: mon-app
-    image: artifactory/docker-local/mon-app:1.0.0  # Version spécifique</code></pre>
+      spec:
+        containers:
+        - name: mon-app
+          image: artifactory/docker-local/mon-app:1.0.0  # Version spécifique
+  </code></pre>
     </section>
 
     <section>
