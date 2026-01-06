@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Guide complet sur JFrog Artifactory : référentiel binaire, gestion d'artefacts, intégration DevOps et bonnes pratiques">
   <link rel="stylesheet" href="../Assets/style/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="../Assets/public/jfrog-seeklogo.svg" type="image/x-icon">
 </head>
 <body>
 
@@ -18,8 +19,8 @@
   <nav class="navbar">
         <ul>
             <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="devops.html" class="active"><i class="fas fa-cogs"></i> DevOps</a></li>
-            <li><a href="artifactory.html"><i class="fas fa-box-archive"></i> Artifactory</a></li>
+            <li><a href="devops.html" ><i class="fas fa-cogs"></i> DevOps</a></li>
+            <li><a href="artifactory.html" class="active"><i class="fas fa-box-archive"></i> Artifactory</a></li>
             <li><a href="installation.html"><i class="fas fa-download"></i> Installation</a></li>
             <li><a href="utilisation.html"><i class="fas fa-tools"></i> Utilisation</a></li>
             <li><a href="cicd.html"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
@@ -90,17 +91,21 @@
     </ol>
 
     <h3>Exemple de métadonnées associées à un artefact dans Artifactory :</h3>
-    <pre><code>{
-  "name": "mon-application",
-  "version": "1.2.3",
-  "buildNumber": "45",
-  "gitCommit": "a1b2c3d4e5f67890123456789abcdef01234567",
-  "builtBy": "jenkins-build-agent-42",
-  "builtOn": "2024-01-15T10:30:00Z",
-  "dependencies": ["spring-boot:2.7.0", "log4j:2.17.1"],
-  "vulnerabilities": 0,
-  "license": "Apache-2.0"
-}</code></pre>
+    <pre><code>
+      {
+      "name": "mon-application",
+      "version": "1.2.3",
+      "buildNumber": "45",
+      "gitCommit": "a1b2c3d4e5f678901234
+      56789abcdef01234567",
+      "builtBy": "jenkins-build-agent-42",
+      "builtOn": "2024-01-15T10:30:00Z",
+      "dependencies": ["spring-boot:2.7.0", 
+      "log4j:2.17.1"],
+      "vulnerabilities": 0,
+      "license": "Apache-2.0"
+      }
+</code></pre>
   </section>
 
   <!-- SECTION 3 - UTILISATEURS ET CAS D'USAGE ENRICHIE -->

@@ -114,3 +114,24 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 10px 25px;
 }
+
+/* 
+*/
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #020617;
+  color: #e6eef8;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #102430;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  white-space: pre; 
+}
+
+pre code {
+  display: block;
+}
